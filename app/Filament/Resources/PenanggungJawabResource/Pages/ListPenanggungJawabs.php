@@ -11,7 +11,6 @@ class ListPenanggungJawabs extends ListRecords
 {
     protected static string $resource = PenanggungJawabResource::class;
     protected static ?string $title = 'Penanggung Jawab';
-    protected static ?string $modelLabel = 'Penanggung Jawab';
 
     protected function getHeaderActions(): array
     {

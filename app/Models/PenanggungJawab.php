@@ -24,7 +24,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class PenanggungJawab extends Model
 {
-	protected $table = 'penanggung_jawab';
+	protected $table = 'penanggung_jawabs';
 
 	protected $fillable = [
 		'name'

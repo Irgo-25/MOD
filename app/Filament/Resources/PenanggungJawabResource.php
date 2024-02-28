@@ -2,28 +2,29 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PenanggungJawabResource\Pages;
-use App\Filament\Resources\PenanggungJawabResource\RelationManagers;
-use App\Models\PenanggungJawab;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use App\Models\PenanggungJawab;
+use Filament\Resources\Resource;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\PenanggungJawabResource\Pages;
+use App\Filament\Resources\PenanggungJawabResource\RelationManagers;
 
 class PenanggungJawabResource extends Resource
 {
     protected static ?string $model = PenanggungJawab::class;
     protected static ?string $navigationLabel = 'Penanggung Jawab';
-    public static ?string $modelLabel = 'Penanggung Jawab';
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                TextInput::make('name')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -33,7 +34,7 @@ class PenanggungJawabResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
 

@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('tindakans', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('deskripsi_temuan');
+            $table->string('status');
+            $table->string('img_url');
             $table->timestamps();
         });
     }

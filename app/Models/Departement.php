@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null $updated_at
  * 
  * @property Collection|Temuan[] $temuans
+ * @property Collection|User[] $users
  *
  * @package App\Models
  */
@@ -33,5 +34,10 @@ class Departement extends Model
 	public function temuans()
 	{
 		return $this->hasMany(Temuan::class);
+	}
+
+	public function users()
+	{
+		return $this->hasMany(User::class);
 	}
 }

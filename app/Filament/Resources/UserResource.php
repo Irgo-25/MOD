@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\UserResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\UserResource\RelationManagers;
+use App\Models\Departement;
 use Filament\Forms\Components\Select;
 
 class UserResource extends Resource
@@ -37,9 +38,12 @@ class UserResource extends Resource
                 Select::make('jabatan')
                     ->required()
                     ->options(JabatanList::class)->native(false),
-                Select::make('departement')
+                Select::make('departement_id')
+                    ->label('Departement')
+                    ->options(Departement::all()->pluck('name', 'id'))
                     ->required()
-                    ->options(DepartementsList::class)->native(false),
+                    ->native(false),
+
                 TextInput::make('password')
                     ->required()
                     ->password()
@@ -54,7 +58,7 @@ class UserResource extends Resource
                 TextColumn::make('name'),
                 TextColumn::make('email'),
                 TextColumn::make('jabatan'),
-                TextColumn::make('departement'),
+                TextColumn::make('departement.name'),
             ])
             ->filters([
                 //
