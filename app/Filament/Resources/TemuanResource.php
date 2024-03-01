@@ -8,16 +8,24 @@ use App\Models\Temuan;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use App\Models\Departement;
+use App\Models\PenanggungJawab;
 use Filament\Resources\Resource;
+
 use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\RichEditor;
 use Illuminate\Database\Eloquent\Builder;
-use Filament\Forms\Components\MarkdownEditor;
 use App\Filament\Resources\TemuanResource\Pages;
+use Filament\Forms\Components\Actions\Action;
+// use Filament\Resources\RelationManagers\RelationManager;
+// use App\Filament\Resources\TemuanResource\RelationManagers;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use App\Filament\Resources\TemuanResource\RelationManagers;
+use App\Filament\Resources\TemuanResource\RelationManagers\TindakanRelationManager;
+use Filament\Forms\Components\MarkdownEditor;
 
 class TemuanResource extends Resource
 {
@@ -29,26 +37,58 @@ class TemuanResource extends Resource
     {
         return $form
             ->schema([
-
+                Select::make('tim')
+                    ->required()
+                    ->options([
+                        'A' => 'A',
+                        'B' => 'B',
+                        'C' => 'C',
+                        'D' => 'D',
+                        'E' => 'E',
+                        'F' => 'F',
+                    ])
+                    ->native(false),
                 MarkdownEditor::make('deskripsi_temuan')
+                    ->columnSpanFull()
                     ->required(),
                 Select::make('pj_id')
-                    ->required(),
+                    ->label('Penanggung Jawab')
+                    ->relationship('penanggung_jawab', 'name')
+                    ->required()
+                    ->createOptionAction(
+                        fn (Action $action) => $action->modalWidth('lg'),
+                    )
+                    ->createOptionForm(
+                        [
+                            TextInput::make('name')
+                                ->required()
+                                ->maxLength(255),
+                        ]
+                    )
+                    ->native(false),
                 Select::make('departement_id')
                     ->label('Departement')
-                    ->options(Departement::all()->pluck('name', 'id'))
+                    ->relationship('departement', 'name')
                     ->required()
+                    ->createOptionAction(
+                        fn (Action $action) => $action->modalWidth('lg'),
+                    )
+                    ->createOptionForm(
+                        [
+                            TextInput::make('name')
+                                ->required()
+                                ->maxLength(255),
+                        ]
+                    )
                     ->native(false),
-                TextInput::make('tindakan_status_id')
-                    ->required(),
-                TextInput::make('tindakan_img_url_id')
-                    ->required(),
                 TextInput::make('lokasi')
                     ->required()
                     ->maxLength(255),
-                TextInput::make('img_url')
-                    ->required()
-                    ->maxLength(255),
+                FileUpload::make('img_url')
+                    ->multiple()
+                    ->disk('public')
+                    ->directory('Image_temuan')
+                    ->enableOpen(),
                 TextInput::make('usulan')
                     ->required()
                     ->maxLength(255),
@@ -66,30 +106,33 @@ class TemuanResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('deskripsi_temuan')
+                TextColumn::make('tim')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('lokasi')
+                TextColumn::make('deskripsi_temuan')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('img_url')
+                TextColumn::make('lokasi')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('pj_id')
+                ImageColumn::make('img_url')
+                    ->height(120),
+                TextColumn::make('penanggung_jawab.name')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('usulan')
+                TextColumn::make('usulan')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('tanggapan_pj')
+                TextColumn::make('tanggapan_pj')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('departement_id')
+                TextColumn::make('departement.name')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('jadwal_penyelesaian')
+                TextColumn::make('jadwal_penyelesaian')
                     ->dateTime()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('rencana_perbaikan')
+                TextColumn::make('rencana_perbaikan')
                     ->dateTime()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('tindakan_status_id')
+                TextColumn::make('tindakans.status')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('tindakan_img_url_id')
-                    ->sortable(),
+                ImageColumn::make('tindakan.img_url')
+                    ->label('Image Tindakan')
+                    ->stacked(),
             ])
             ->filters([
                 //
@@ -107,7 +150,7 @@ class TemuanResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            TindakanRelationManager::class,
         ];
     }
 

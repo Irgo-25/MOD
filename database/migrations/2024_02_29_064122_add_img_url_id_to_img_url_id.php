@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tindakans', function (Blueprint $table) {
-            $table->id();
-            $table->string('status');
-            $table->string('img_url');
-            $table->timestamps();
+        Schema::table('tindakans', function (Blueprint $table) {
+            $table->foreignId('img_url_id')->constrained('temuans', 'id');
         });
     }
 
@@ -24,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tindakans');
+        Schema::table('tindakans', function (Blueprint $table) {
+            $table->foreignId('img_url_id')->constrained('temuans', 'id');
+        });
     }
 };

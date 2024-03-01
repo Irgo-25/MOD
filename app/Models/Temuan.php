@@ -7,6 +7,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -17,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $lokasi
  * @property string $img_url
  * @property int $pj_id
+ * @property string $tim
  * @property string $usulan
  * @property string $tanggapan_pj
  * @property int $departement_id
@@ -30,6 +32,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Departement $departement
  * @property PenanggungJawab $penanggung_jawab
  * @property Tindakan $tindakan
+ * @property Collection|Tindakan[] $tindakans
  *
  * @package App\Models
  */
@@ -43,7 +46,8 @@ class Temuan extends Model
 		'jadwal_penyelesaian' => 'datetime',
 		'rencana_perbaikan' => 'datetime',
 		'tindakan_status_id' => 'int',
-		'tindakan_img_url_id' => 'int'
+		'tindakan_img_url_id' => 'int',
+		'img_url' => 'array',
 	];
 
 	protected $fillable = [
@@ -51,6 +55,7 @@ class Temuan extends Model
 		'lokasi',
 		'img_url',
 		'pj_id',
+		'tim',
 		'usulan',
 		'tanggapan_pj',
 		'departement_id',
@@ -70,8 +75,12 @@ class Temuan extends Model
 		return $this->belongsTo(PenanggungJawab::class, 'pj_id');
 	}
 
+	public function tindakans()
+	{
+		return $this->hasMany(Tindakan::class);
+	}
 	public function tindakan()
 	{
-		return $this->belongsTo(Tindakan::class, 'tindakan_status_id');
+		return $this->belongsTo(Tindakan::class, 'tindakan_img_url_id');
 	}
 }

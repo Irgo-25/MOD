@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources\TindakanResource\Pages;
 
-use App\Filament\Resources\TindakanResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
+use App\Filament\Resources\TindakanResource;
 
 class ListTindakans extends ListRecords
 {
@@ -13,7 +13,7 @@ class ListTindakans extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            // Actions\CreateAction::make(),
         ];
     }
 }

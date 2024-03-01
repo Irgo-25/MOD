@@ -32,6 +32,6 @@ class PenanggungJawab extends Model
 
 	public function temuans()
 	{
-		return $this->hasMany(Temuan::class, 'pj_id');
+		return $this->hasMany(Temuan::class);
 	}
 }

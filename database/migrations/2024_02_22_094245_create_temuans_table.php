@@ -17,13 +17,14 @@ return new class extends Migration
             $table->string('lokasi');
             $table->string('img_url');
             $table->foreignId('pj_id')->constrained('penanggung_jawabs', 'id');
+            $table->string('tim');
             $table->string('usulan');
             $table->string('tanggapan_pj');
             $table->foreignId('departement_id')->constrained('departements', 'id');
             $table->dateTime('jadwal_penyelesaian');
             $table->dateTime('rencana_perbaikan');
-            $table->foreignId('tindakan_status_id')->constrained('tindakans', 'id');
-            $table->foreignId('tindakan_img_url_id')->constrained('tindakans', 'id');
+            $table->foreignId('tindakan_status_id')->constrained('tindakans', 'id')->nullable();
+            $table->foreignId('tindakan_img_url_id')->constrained('tindakans', 'id')->nullable();
             $table->timestamps();
         });
     }

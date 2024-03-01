@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\Departement;
 use Filament\Forms\Components\Select;
+use Illuminate\Support\Facades\Hash;
 
 class UserResource extends Resource
 {
@@ -47,6 +48,7 @@ class UserResource extends Resource
                 TextInput::make('password')
                     ->required()
                     ->password()
+                    ->dehydrateStateUsing(fn (string $state): string => Hash::make($state))
                     ->revealable(),
             ]);
     }
