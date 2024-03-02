@@ -44,10 +44,10 @@ class Tindakan extends Model
 
 	public function temuan()
 	{
-		return $this->belongsTo(Temuan::class);
+		return $this->belongsTo(Temuan::class, 'temuan_id');
 	}
 	public function temuans()
 	{
-		return $this->hasMany(Temuan::class,);
+		return $this->hasMany(Temuan::class, 'tindakan_status_id');
 	}
 }

@@ -17,7 +17,7 @@ use Filament\Resources\RelationManagers\RelationManager;
 
 class TindakanRelationManager extends RelationManager
 {
-    protected static string $relationship = 'tindakan';
+    protected static string $relationship = 'tindakans';
 
     public function form(Form $form): Form
     {
@@ -59,11 +59,11 @@ class TindakanRelationManager extends RelationManager
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
             ]);
+        // ->bulkActions([
+        //     Tables\Actions\BulkActionGroup::make([
+        //         Tables\Actions\DeleteBulkAction::make(),
+        //     ]),
+        // ]);
     }
 }

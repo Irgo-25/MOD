@@ -130,9 +130,6 @@ class TemuanResource extends Resource
                     ->sortable(),
                 TextColumn::make('tindakans.status')
                     ->sortable(),
-                ImageColumn::make('tindakan.img_url')
-                    ->label('Image Tindakan')
-                    ->stacked(),
             ])
             ->filters([
                 //

@@ -77,10 +77,10 @@ class Temuan extends Model
 
 	public function tindakans()
 	{
-		return $this->hasMany(Tindakan::class);
+		return $this->hasMany(Tindakan::class, 'temuan_id');
 	}
 	public function tindakan()
 	{
-		return $this->belongsTo(Tindakan::class, 'tindakan_img_url_id');
+		return $this->belongsTo(Tindakan::class, 'tindakan_status_id');
 	}
 }
