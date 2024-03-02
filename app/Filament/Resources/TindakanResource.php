@@ -44,6 +44,9 @@ class TindakanResource extends Resource
                 ImageColumn::make('img_url')
                     ->label('Gambar Tindakan')
                     ->height(120),
+                TextColumn::make('created_at')
+                    ->label('Tanggal Pelaporan')
+                    ->searchable(),
             ])
             ->filters([
                 //

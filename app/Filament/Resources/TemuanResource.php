@@ -8,9 +8,10 @@ use App\Models\Temuan;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use App\Models\Departement;
+use Filament\Infolists\Infolist;
 use App\Models\PenanggungJawab;
-use Filament\Resources\Resource;
 
+use Filament\Resources\Resource;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
@@ -19,20 +20,22 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
 use Illuminate\Database\Eloquent\Builder;
-use App\Filament\Resources\TemuanResource\Pages;
-use Filament\Forms\Components\Actions\Action;
+use Filament\Tables\Enums\ActionsPosition;
 // use Filament\Resources\RelationManagers\RelationManager;
 // use App\Filament\Resources\TemuanResource\RelationManagers;
+use Filament\Forms\Components\Actions\Action;
+use Filament\Forms\Components\MarkdownEditor;
+use Filament\Infolists\Components\ImageEntry;
+use App\Filament\Resources\TemuanResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\TemuanResource\RelationManagers\TindakanRelationManager;
-use Filament\Forms\Components\MarkdownEditor;
 
 class TemuanResource extends Resource
 {
     protected static ?string $model = Temuan::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    protected static ?string $navigationLabel = 'Temuan';
     public static function form(Form $form): Form
     {
         return $form
@@ -85,6 +88,7 @@ class TemuanResource extends Resource
                     ->required()
                     ->maxLength(255),
                 FileUpload::make('img_url')
+                    ->label('Gambar Temuan')
                     ->multiple()
                     ->disk('public')
                     ->directory('Image_temuan')
@@ -93,6 +97,7 @@ class TemuanResource extends Resource
                     ->required()
                     ->maxLength(255),
                 TextInput::make('tanggapan_pj')
+                    ->label('Tanggapan Penanggung Jawab')
                     ->required()
                     ->maxLength(255),
                 DatePicker::make('jadwal_penyelesaian')
@@ -101,7 +106,6 @@ class TemuanResource extends Resource
                     ->required(),
             ]);
     }
-
     public static function table(Table $table): Table
     {
         return $table
@@ -113,34 +117,63 @@ class TemuanResource extends Resource
                 TextColumn::make('lokasi')
                     ->searchable(),
                 ImageColumn::make('img_url')
-                    ->height(120),
+                    ->label('Gambar Temuan')
+                    ->circular()
+                    ->stacked()
+                    ->overlap(4),
                 TextColumn::make('penanggung_jawab.name')
                     ->sortable(),
                 TextColumn::make('usulan')
                     ->searchable(),
                 TextColumn::make('tanggapan_pj')
+                    ->label('Tanggapan Penanggung Jawab')
                     ->searchable(),
                 TextColumn::make('departement.name')
                     ->sortable(),
+                TextColumn::make('created_at')
+                    ->label('Tanggal Pelaporan')
+                    ->searchable()
+                    ->date('D,d-M-Y'),
                 TextColumn::make('jadwal_penyelesaian')
-                    ->dateTime()
+                    ->date('D,d-M-Y')
                     ->sortable(),
                 TextColumn::make('rencana_perbaikan')
-                    ->dateTime()
+                    ->date('D,d-M-Y')
                     ->sortable(),
                 TextColumn::make('tindakans.status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'Proses' => 'danger',
+                        'Pending' => 'warning',
+                        'Dikerjakan' => 'info',
+                        'Selesai' => 'success'
+                    })
                     ->sortable(),
             ])
+            
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
+                Tables\Actions\ViewAction::make()
+                    ->label('Lihat Gambar'),
+                Tables\Actions\EditAction::make()
+                    ->label('Buat Tindakan'),
+            ], position: ActionsPosition::BeforeColumns)
+
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+            ]);
+    }
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                ImageEntry::make('img_url')
+                    ->label('Gambar Temuan')
+                    ->height(150),
             ]);
     }
 

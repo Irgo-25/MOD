@@ -9,6 +9,8 @@ use Filament\Resources\Pages\ListRecords;
 class ListTemuans extends ListRecords
 {
     protected static string $resource = TemuanResource::class;
+    protected static ?string $title = 'Temuan';
+
 
     protected function getHeaderActions(): array
     {
@@ -16,4 +18,5 @@ class ListTemuans extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
+    
 }

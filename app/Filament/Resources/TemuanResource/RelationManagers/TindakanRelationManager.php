@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\TemuanResource\RelationManagers;
 
+use Dotenv\Util\Str;
 use Filament\Forms;
 use Filament\Tables;
 use Filament\Forms\Form;
@@ -45,10 +46,21 @@ class TindakanRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('temuan_id')
             ->columns([
-                TextColumn::make('status'),
+                TextColumn::make('status')
+                ->badge()
+                ->color(fn(string $state): string=> match ($state){
+                    'Proses' => 'danger',
+                    'Pending' => 'warning',
+                    'Dikerjakan' => 'grey',
+                    'Selesai' => 'success'
+                }),
                 ImageColumn::make('img_url')
                     ->label('Gambar Tindakan')
                     ->height(120),
+                TextColumn::make('created_at')
+                    ->label('Tanggal Pelaporan')
+                    ->searchable()
+                    ->date('D,d-M-Y'),
             ])
             ->filters([
                 //

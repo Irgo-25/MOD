@@ -83,4 +83,5 @@ class Temuan extends Model
 	{
 		return $this->belongsTo(Tindakan::class, 'tindakan_status_id');
 	}
+	
 }
