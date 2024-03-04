@@ -29,6 +29,7 @@ use Filament\Infolists\Components\ImageEntry;
 use App\Filament\Resources\TemuanResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\TemuanResource\RelationManagers\TindakanRelationManager;
+use Faker\Core\Color;
 
 class TemuanResource extends Resource
 {
@@ -150,13 +151,14 @@ class TemuanResource extends Resource
                     })
                     ->sortable(),
             ])
-            
+
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\ViewAction::make()
-                    ->label('Lihat Gambar'),
+                    ->label('Lihat Gambar')
+                    ->color('info'),
                 Tables\Actions\EditAction::make()
                     ->label('Buat Tindakan'),
             ], position: ActionsPosition::BeforeColumns)
