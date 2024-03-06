@@ -40,7 +40,7 @@ class UserResource extends Resource
                 Select::make('jabatan')
                     ->required()
                     ->options(JabatanList::class)->native(false),
-                Select::make('Role')
+                Select::make('role')
                     ->required()
                     ->options(RoleList::class)->native(false),
                 Select::make('departement_id')
@@ -63,6 +63,7 @@ class UserResource extends Resource
             ->columns([
                 TextColumn::make('name'),
                 TextColumn::make('email'),
+                TextColumn::make('role'),
                 TextColumn::make('jabatan'),
                 TextColumn::make('departement.name'),
             ])
