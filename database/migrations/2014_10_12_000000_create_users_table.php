@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->enum('jabatan', ['Direktur', 'General Manager', 'Ast.Manager', 'SPV'])->unique();
+            $table->enum('jabatan', ['Direktur', 'General Manager', 'Ast.Manager', 'SPV']);
+            $table->enum('role', ['Direktur', 'User', 'Superuser']);
             $table->foreignId('departement_id')->constrained('departements', 'id');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

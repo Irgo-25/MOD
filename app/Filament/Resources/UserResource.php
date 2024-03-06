@@ -39,6 +39,9 @@ class UserResource extends Resource
                 Select::make('jabatan')
                     ->required()
                     ->options(JabatanList::class)->native(false),
+                Select::make('Role')
+                    ->required()
+                    ->options(RoleList::class)->native(false),
                 Select::make('departement_id')
                     ->label('Departement')
                     ->options(Departement::all()->pluck('name', 'id'))
