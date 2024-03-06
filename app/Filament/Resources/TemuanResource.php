@@ -4,14 +4,16 @@ namespace App\Filament\Resources;
 
 use Filament\Forms;
 use Filament\Tables;
+use Faker\Core\Color;
 use App\Models\Temuan;
+use App\Models\Tindakan;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use App\Models\Departement;
-use Filament\Infolists\Infolist;
 use App\Models\PenanggungJawab;
-
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
+use Filament\Tables\Actions\Action;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
@@ -19,17 +21,17 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\RichEditor;
-use Illuminate\Database\Eloquent\Builder;
-use Filament\Tables\Enums\ActionsPosition;
 // use Filament\Resources\RelationManagers\RelationManager;
 // use App\Filament\Resources\TemuanResource\RelationManagers;
-use Filament\Forms\Components\Actions\Action;
+// use Filament\Forms\Components\Actions\Action;
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Enums\ActionsPosition;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Infolists\Components\ImageEntry;
 use App\Filament\Resources\TemuanResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\TemuanResource\Pages\ViewTemuan;
 use App\Filament\Resources\TemuanResource\RelationManagers\TindakanRelationManager;
-use Faker\Core\Color;
 
 class TemuanResource extends Resource
 {
@@ -157,7 +159,7 @@ class TemuanResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make()
-                    ->label('Lihat Gambar')
+                    ->label('Detail')
                     ->color('info'),
                 Tables\Actions\EditAction::make()
                     ->label('Buat Tindakan'),
@@ -191,6 +193,7 @@ class TemuanResource extends Resource
         return [
             'index' => Pages\ListTemuans::route('/'),
             'create' => Pages\CreateTemuan::route('/create'),
+            'view' => ViewTemuan::route('/{record}'),
             'edit' => Pages\EditTemuan::route('/{record}/edit'),
         ];
     }
