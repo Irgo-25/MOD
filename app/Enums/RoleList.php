@@ -4,7 +4,7 @@ namespace App\Enums;
 
 use Filament\Support\Contracts\HasLabel;
 
-enum JabatanList: string implements HasLabel
+enum RoleList: string implements HasLabel
 {
     case Direktur = 'Direktur';
     case User = 'User';
