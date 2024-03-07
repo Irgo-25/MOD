@@ -14,17 +14,18 @@ use App\Models\PenanggungJawab;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\KeyValue;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\RichEditor;
 // use Filament\Resources\RelationManagers\RelationManager;
 // use App\Filament\Resources\TemuanResource\RelationManagers;
-use Filament\Forms\Components\Actions\Action;
+use Filament\Forms\Components\RichEditor;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Enums\ActionsPosition;
+use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Infolists\Components\ImageEntry;
 use App\Filament\Resources\TemuanResource\Pages;
@@ -56,9 +57,9 @@ class TemuanResource extends Resource
                 MarkdownEditor::make('deskripsi_temuan')
                     ->columnSpanFull()
                     ->required(),
-                Select::make('pj_id')
-                    ->label('Penanggung Jawab')
-                    ->relationship('penanggung_jawab', 'name')
+                Select::make('pelaksana_mod')
+                    ->label('Pelaksana MOD')
+                    ->relationship('departement_name', 'pic')
                     ->required()
                     ->createOptionAction(
                         fn (Action $action) => $action->modalWidth('lg'),
@@ -68,12 +69,18 @@ class TemuanResource extends Resource
                             TextInput::make('name')
                                 ->required()
                                 ->maxLength(255),
+                            TextInput::make('pic')
+                                ->required()
+                                ->maxLength(255),
                         ]
                     )
                     ->native(false),
-                Select::make('departement_id')
-                    ->label('Departement')
-                    ->relationship('departement', 'name')
+                Select::make('pic')
+                    ->label('PIC Wilayah')
+                    ->searchable()
+                    ->relationship('departement_pic', 'pic')
+                    ->getSearchResultsUsing(fn (string $search): array => Departement::where('name', 'like', "%{$search}%")->limit(50)->pluck('pic', 'id')->toArray())
+                    ->searchPrompt('Masukan Nama Departement')
                     ->required()
                     ->createOptionAction(
                         fn (Action $action) => $action->modalWidth('lg'),
@@ -81,6 +88,9 @@ class TemuanResource extends Resource
                     ->createOptionForm(
                         [
                             TextInput::make('name')
+                                ->required()
+                                ->maxLength(255),
+                            TextInput::make('pic')
                                 ->required()
                                 ->maxLength(255),
                         ]
@@ -123,15 +133,18 @@ class TemuanResource extends Resource
                     ->circular()
                     ->stacked()
                     ->overlap(4),
-                TextColumn::make('penanggung_jawab.name')
+                TextColumn::make('departement_pic.pic')
+                    ->label('PIC Terkait')
+                    ->sortable(),
+                TextColumn::make('departement_name.pic')
+                    ->label('Pelaksana MOD')
                     ->sortable(),
                 TextColumn::make('usulan')
                     ->searchable(),
                 TextColumn::make('tanggapan_pj')
                     ->label('Tanggapan Penanggung Jawab')
                     ->searchable(),
-                TextColumn::make('departement.name')
-                    ->sortable(),
+
                 TextColumn::make('created_at')
                     ->label('Tanggal Pelaporan')
                     ->searchable()

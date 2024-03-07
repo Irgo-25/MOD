@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('tindakans', function (Blueprint $table) {
-            $table->foreignId('img_url_id')->constrained('temuans', 'id');
+            $table->foreignId('img_url_id')->nullable()->constrained('temuans', 'id');
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('tindakans', function (Blueprint $table) {
-            $table->foreignId('img_url_id')->constrained('temuans', 'id');
+            $table->foreignId('img_url_id')->nullable()->constrained('temuans', 'id');
         });
     }
 };

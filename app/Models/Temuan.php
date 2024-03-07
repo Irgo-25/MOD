@@ -30,7 +30,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null $updated_at
  * 
  * @property Departement $departement
- * @property PenanggungJawab $penanggung_jawab
+//  * @property PenanggungJawab $penanggung_jawab
  * @property Tindakan $tindakan
  * @property Collection|Tindakan[] $tindakans
  *
@@ -41,7 +41,7 @@ class Temuan extends Model
 	protected $table = 'temuans';
 
 	protected $casts = [
-		'pj_id' => 'int',
+		// 'pj_id' => 'int',
 		'departement_id' => 'int',
 		'jadwal_penyelesaian' => 'datetime',
 		'rencana_perbaikan' => 'datetime',
@@ -54,26 +54,30 @@ class Temuan extends Model
 		'deskripsi_temuan',
 		'lokasi',
 		'img_url',
-		'pj_id',
+		'pelaksana_mod',
 		'tim',
 		'usulan',
 		'tanggapan_pj',
-		'departement_id',
+		'pic',
 		'jadwal_penyelesaian',
 		'rencana_perbaikan',
 		'tindakan_status_id',
 		'tindakan_img_url_id'
 	];
 
-	public function departement()
+	public function departement_name()
 	{
-		return $this->belongsTo(Departement::class);
+		return $this->belongsTo(Departement::class, 'pelaksana_mod');
+	}
+	public function departement_pic()
+	{
+		return $this->belongsTo(Departement::class, 'pic');
 	}
 
-	public function penanggung_jawab()
-	{
-		return $this->belongsTo(PenanggungJawab::class, 'pj_id');
-	}
+	// public function penanggung_jawab()
+	// {
+	// 	return $this->belongsTo(PenanggungJawab::class, 'pj_id');
+	// }
 
 	public function tindakans()
 	{

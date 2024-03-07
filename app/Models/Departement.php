@@ -28,12 +28,13 @@ class Departement extends Model
 	protected $table = 'departements';
 
 	protected $fillable = [
-		'name'
+		'name',
+		'pic'
 	];
 
 	public function temuans()
 	{
-		return $this->hasMany(Temuan::class);
+	 $this->hasMany(Temuan::class);
 	}
 
 	public function users()

@@ -30,8 +30,8 @@ class PenanggungJawab extends Model
 		'name'
 	];
 
-	public function temuans()
-	{
-		return $this->hasMany(Temuan::class);
-	}
+	// public function temuans()
+	// {
+	// 	return $this->hasMany(Temuan::class);
+	// }
 }
