@@ -40,7 +40,14 @@ class TindakanResource extends Resource
             ->columns([
                 TextColumn::make('temuan.deskripsi_temuan'),
                 TextColumn::make('status')
-                    ->searchable(),
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'Proses' => 'danger',
+                        'Pending' => 'warning',
+                        'Dikerjakan' => 'info',
+                        'Selesai' => 'success'
+                    })
+                    ->sortable(),
                 ImageColumn::make('img_url')
                     ->label('Gambar Tindakan')
                     ->height(120),
