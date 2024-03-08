@@ -43,10 +43,10 @@ class Temuan extends Model
 
 	protected $casts = [
 		// 'pj_id' => 'int',
-		'pelaksana_mod' => 'int',
 		'tindakan_status_id' => 'int',
 		'tindakan_img_url_id' => 'int',
 		'img_url' => 'array',
+		'pelaksana_mod' => 'array',
 	];
 
 	protected $fillable = [

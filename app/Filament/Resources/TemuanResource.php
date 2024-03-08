@@ -58,8 +58,8 @@ class TemuanResource extends Resource
                 Select::make('pelaksana_mod')
                     ->label('Pelaksana MOD')
                     ->relationship('team', 'pelaksana_mod')
-                    ->required()
                     ->multiple()
+                    ->required()
                     ->native(false),
                 MarkdownEditor::make('deskripsi_temuan')
                     ->columnSpanFull()
