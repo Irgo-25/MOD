@@ -2,11 +2,13 @@
 
 namespace App\Filament\Resources\TemuanResource\RelationManagers;
 
-use Dotenv\Util\Str;
 use Filament\Forms;
+use Dotenv\Util\Str;
 use Filament\Tables;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+use App\Models\Departement;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
@@ -15,6 +17,7 @@ use Filament\Forms\Components\FileUpload;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Resources\RelationManagers\RelationManager;
+use Illuminate\Support\Facades\Date;
 
 class TindakanRelationManager extends RelationManager
 {
@@ -38,6 +41,23 @@ class TindakanRelationManager extends RelationManager
                     ->disk('public')
                     ->directory('Image_tindakan')
                     ->enableOpen(),
+                    Select::make('pic')
+                    ->label('PIC Wilayah')
+                    ->searchable()
+                    ->relationship('departement_pic', 'pic')
+                    ->getSearchResultsUsing(fn (string $search): array => Departement::where('name', 'like', "%{$search}%")->limit(50)->pluck('pic', 'id')->toArray())
+                    ->searchPrompt('Masukan Nama Departement')
+                    ->required()
+                    ->native(false),
+                TextInput::make('tanggapan_pic')
+                ->required()
+                ->maxLength(255),
+                TextInput::make('keterangan')
+                ->required()
+                ->maxLength(255),
+                DatePicker::make('rencana_perbaikan')
+                ->format('D-M-Y')
+                ->required(),
             ]);
     }
 
