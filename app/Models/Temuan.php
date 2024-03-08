@@ -38,12 +38,12 @@ class Temuan extends Model
 	protected $table = 'temuans';
 
 	protected $casts = [
-		'pelaksana_mod' => 'int',
-		// 'pelaksana_mod' => 'array',
 		'pic' => 'int',
+		'tim_id' => 'int',
 		'tindakan_status_id' => 'int',
 		'tindakan_img_url_id' => 'int',
 		'img_url' => 'array',
+		'pelaksana_mod' =>'string'
 	];
 
 	protected $fillable = [
@@ -51,7 +51,7 @@ class Temuan extends Model
 		'lokasi',
 		'img_url',
 		'pelaksana_mod',
-		'tim',
+		'tim_id',
 		'usulan',
 		'pic',
 		'tindakan_status_id',
@@ -60,7 +60,7 @@ class Temuan extends Model
 
 	public function team()
 	{
-		return $this->belongsTo(Team::class, 'pelaksana_mod');
+		return $this->belongsTo(Team::class, 'tim_id');
 	}
 
 	public function departement_pic()

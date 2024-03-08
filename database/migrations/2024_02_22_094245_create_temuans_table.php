@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('deskripsi_temuan');
             $table->string('lokasi');
             $table->string('img_url');
-            $table->foreignId('pelaksana_mod')->constrained('teams', 'id');
-            $table->string('tim');
+            $table->string('pelaksana_mod');
+            $table->foreignId('tim')->constrained('teams', 'id');
             $table->string('usulan');
             $table->foreignId('pic')->constrained('departements', 'id');
             $table->foreignId('tindakan_status_id')->nullable()->constrained('tindakans', 'id');

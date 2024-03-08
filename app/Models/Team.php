@@ -28,7 +28,6 @@ class Team extends Model
 	protected $table = 'teams';
 
 	protected $casts = [
-		'tim' => 'array',
 		'id' => 'int'
 	];
 	protected $fillable = [
@@ -38,6 +37,6 @@ class Team extends Model
 
 	public function temuans()
 	{
-		return $this->hasMany(Temuan::class);
+		return $this->hasMany(Temuan::class, 'id');
 	}
 }

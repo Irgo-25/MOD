@@ -10,10 +10,10 @@ use Filament\Forms\Form;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Builder;
 use Filament\Forms\Components\KeyValue;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
-use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\TeamResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\TeamResource\RelationManagers;
@@ -33,6 +33,7 @@ class TeamResource extends Resource
                     ->required()
                     ->placeholder('Masukan TIM')
                     ->options(TeamsList::class),
+
                 TextInput::make('pelaksana_mod')
                     ->placeholder('Masukan Nama Pelaksana')
                     ->required(),
