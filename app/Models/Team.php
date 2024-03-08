@@ -11,10 +11,11 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class PenanggungJawab
+ * Class Team
  * 
  * @property int $id
- * @property string $name
+ * @property string $tim
+ * @property string $pelaksana_mod
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
@@ -22,16 +23,20 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App\Models
  */
-class PenanggungJawab extends Model
+class Team extends Model
 {
-	protected $table = 'penanggung_jawabs';
+	protected $table = 'teams';
 
+	protected $casts = [
+		'tim' => 'array'
+	];
 	protected $fillable = [
-		'name'
+		'tim',
+		'pelaksana_mod'
 	];
 
-	// public function temuans()
-	// {
-	// 	return $this->hasMany(Temuan::class);
-	// }
+	public function temuans()
+	{
+		return $this->hasMany(Temuan::class, 'tim');
+	}
 }

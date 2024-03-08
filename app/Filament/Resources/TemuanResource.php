@@ -10,11 +10,11 @@ use App\Models\Tindakan;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 use App\Models\Departement;
-use App\Models\PenanggungJawab;
+
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\KeyValue;
+
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\ImageColumn;
@@ -32,6 +32,7 @@ use App\Filament\Resources\TemuanResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\TemuanResource\Pages\ViewTemuan;
 use App\Filament\Resources\TemuanResource\RelationManagers\TindakanRelationManager;
+use App\Models\Team;
 
 class TemuanResource extends Resource
 {
@@ -54,27 +55,17 @@ class TemuanResource extends Resource
                         'F' => 'F',
                     ])
                     ->native(false),
+                Select::make('pelaksana_mod')
+                    ->label('Pelaksana MOD')
+                    ->searchable()
+                    ->getSearchResultsUsing(fn (string $search): array => Team::where('tim', 'like', "%{$search}%")->limit(10)->pluck('pelaksana_mod')->toArray())
+                    ->searchPrompt('Masukan Nama TIM')
+                    ->required()
+                    ->multiple()
+                    ->native(false),
                 MarkdownEditor::make('deskripsi_temuan')
                     ->columnSpanFull()
                     ->required(),
-                Select::make('pelaksana_mod')
-                    ->label('Pelaksana MOD')
-                    ->relationship('departement_name', 'pic')
-                    ->required()
-                    ->createOptionAction(
-                        fn (Action $action) => $action->modalWidth('lg'),
-                    )
-                    ->createOptionForm(
-                        [
-                            TextInput::make('name')
-                                ->required()
-                                ->maxLength(255),
-                            TextInput::make('pic')
-                                ->required()
-                                ->maxLength(255),
-                        ]
-                    )
-                    ->native(false),
                 Select::make('pic')
                     ->label('PIC Wilayah')
                     ->searchable()
@@ -82,19 +73,6 @@ class TemuanResource extends Resource
                     ->getSearchResultsUsing(fn (string $search): array => Departement::where('name', 'like', "%{$search}%")->limit(50)->pluck('pic', 'id')->toArray())
                     ->searchPrompt('Masukan Nama Departement')
                     ->required()
-                    ->createOptionAction(
-                        fn (Action $action) => $action->modalWidth('lg'),
-                    )
-                    ->createOptionForm(
-                        [
-                            TextInput::make('name')
-                                ->required()
-                                ->maxLength(255),
-                            TextInput::make('pic')
-                                ->required()
-                                ->maxLength(255),
-                        ]
-                    )
                     ->native(false),
                 TextInput::make('lokasi')
                     ->required()
@@ -106,16 +84,9 @@ class TemuanResource extends Resource
                     ->directory('Image_temuan')
                     ->enableOpen(),
                 TextInput::make('usulan')
+                    ->label('Usulan Pelaksana MOD')
                     ->required()
                     ->maxLength(255),
-                TextInput::make('tanggapan_pj')
-                    ->label('Tanggapan Penanggung Jawab')
-                    ->required()
-                    ->maxLength(255),
-                DatePicker::make('jadwal_penyelesaian')
-                    ->required(),
-                DatePicker::make('rencana_perbaikan')
-                    ->required(),
             ]);
     }
     public static function table(Table $table): Table
@@ -136,25 +107,15 @@ class TemuanResource extends Resource
                 TextColumn::make('departement_pic.pic')
                     ->label('PIC Terkait')
                     ->sortable(),
-                TextColumn::make('departement_name.pic')
+                TextColumn::make('team.pelaksana_mod')
                     ->label('Pelaksana MOD')
                     ->sortable(),
                 TextColumn::make('usulan')
                     ->searchable(),
-                TextColumn::make('tanggapan_pj')
-                    ->label('Tanggapan Penanggung Jawab')
-                    ->searchable(),
-
                 TextColumn::make('created_at')
-                    ->label('Tanggal Pelaporan')
+                    ->label('Tanggal Temuan')
                     ->searchable()
                     ->date('D,d-M-Y'),
-                TextColumn::make('jadwal_penyelesaian')
-                    ->date('D,d-M-Y')
-                    ->sortable(),
-                TextColumn::make('rencana_perbaikan')
-                    ->date('D,d-M-Y')
-                    ->sortable(),
                 TextColumn::make('tindakans.status')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {

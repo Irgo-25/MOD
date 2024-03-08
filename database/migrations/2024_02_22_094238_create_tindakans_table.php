@@ -15,6 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('status');
             $table->string('img_url');
+            $table->foreignId('pic')->constrained('departements', 'id');
+            $table->string('tanggapan_pic');
+            $table->string('keterangan');
+            $table->date('rencana_perbaikan');
             $table->timestamps();
         });
     }

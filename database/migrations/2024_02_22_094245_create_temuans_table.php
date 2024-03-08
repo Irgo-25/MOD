@@ -16,13 +16,10 @@ return new class extends Migration
             $table->string('deskripsi_temuan');
             $table->string('lokasi');
             $table->string('img_url');
-            $table->foreignId('pelaksana_mod')->constrained('departements', 'id');
-            $table->string('tim');
+            $table->foreignId('pelaksana_mod')->constrained('teams', 'id');
+            $table->foreignId('tim')->constrained('teams', 'id');
             $table->string('usulan');
-            $table->string('tanggapan_pj');
             $table->foreignId('pic')->constrained('departements', 'id');
-            $table->dateTime('jadwal_penyelesaian');
-            $table->dateTime('rencana_perbaikan');
             $table->foreignId('tindakan_status_id')->nullable()->constrained('tindakans', 'id');
             $table->foreignId('tindakan_img_url_id')->nullable()->constrained('tindakans', 'id');
             $table->timestamps();

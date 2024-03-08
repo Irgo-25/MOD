@@ -30,6 +30,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null $updated_at
  * 
  * @property Departement $departement
+ * @property Team $departement
 //  * @property PenanggungJawab $penanggung_jawab
  * @property Tindakan $tindakan
  * @property Collection|Tindakan[] $tindakans
@@ -42,43 +43,33 @@ class Temuan extends Model
 
 	protected $casts = [
 		// 'pj_id' => 'int',
-		'departement_id' => 'int',
-		'jadwal_penyelesaian' => 'datetime',
-		'rencana_perbaikan' => 'datetime',
+		'pelaksana_mod' => 'int',
 		'tindakan_status_id' => 'int',
 		'tindakan_img_url_id' => 'int',
 		'img_url' => 'array',
+		'pelaksana_mod' => 'array'
 	];
 
 	protected $fillable = [
+		'tim',
+		'pelaksana_mod',
 		'deskripsi_temuan',
+		'pic',
 		'lokasi',
 		'img_url',
-		'pelaksana_mod',
-		'tim',
 		'usulan',
-		'tanggapan_pj',
-		'pic',
-		'jadwal_penyelesaian',
-		'rencana_perbaikan',
 		'tindakan_status_id',
 		'tindakan_img_url_id'
 	];
 
-	public function departement_name()
+	public function team()
 	{
-		return $this->belongsTo(Departement::class, 'pelaksana_mod');
+		return $this->belongsTo(Team::class, 'pelaksana_mod');
 	}
 	public function departement_pic()
 	{
 		return $this->belongsTo(Departement::class, 'pic');
 	}
-
-	// public function penanggung_jawab()
-	// {
-	// 	return $this->belongsTo(PenanggungJawab::class, 'pj_id');
-	// }
-
 	public function tindakans()
 	{
 		return $this->hasMany(Tindakan::class, 'temuan_id');
@@ -87,5 +78,4 @@ class Temuan extends Model
 	{
 		return $this->belongsTo(Tindakan::class, 'tindakan_status_id');
 	}
-	
 }
