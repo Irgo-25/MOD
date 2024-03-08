@@ -57,9 +57,7 @@ class TemuanResource extends Resource
                     ->native(false),
                 Select::make('pelaksana_mod')
                     ->label('Pelaksana MOD')
-                    ->searchable()
-                    ->getSearchResultsUsing(fn (string $search): array => Team::where('tim', 'like', "%{$search}%")->limit(10)->pluck('pelaksana_mod')->toArray())
-                    ->searchPrompt('Masukan Nama TIM')
+                    ->relationship('team', 'pelaksana_mod')
                     ->required()
                     ->multiple()
                     ->native(false),
