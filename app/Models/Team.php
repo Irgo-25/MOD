@@ -28,7 +28,8 @@ class Team extends Model
 	protected $table = 'teams';
 
 	protected $casts = [
-		'tim' => 'array'
+		'tim' => 'array',
+		'id' => 'int'
 	];
 	protected $fillable = [
 		'tim',
