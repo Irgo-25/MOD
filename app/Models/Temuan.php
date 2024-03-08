@@ -30,7 +30,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null $updated_at
  * 
  * @property Departement $departement
- * @property Team $departement
+ * @property Team $team
 //  * @property PenanggungJawab $penanggung_jawab
  * @property Tindakan $tindakan
  * @property Collection|Tindakan[] $tindakans
@@ -47,7 +47,6 @@ class Temuan extends Model
 		'tindakan_status_id' => 'int',
 		'tindakan_img_url_id' => 'int',
 		'img_url' => 'array',
-		'pelaksana_mod' => 'array'
 	];
 
 	protected $fillable = [

@@ -37,6 +37,6 @@ class Team extends Model
 
 	public function temuans()
 	{
-		return $this->hasMany(Temuan::class, 'tim');
+		return $this->hasMany(Temuan::class);
 	}
 }
