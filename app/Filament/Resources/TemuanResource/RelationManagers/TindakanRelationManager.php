@@ -41,7 +41,7 @@ class TindakanRelationManager extends RelationManager
                     ->disk('public')
                     ->directory('Image_tindakan')
                     ->enableOpen(),
-                    Select::make('pic')
+                Select::make('pic')
                     ->label('PIC Wilayah')
                     ->searchable()
                     ->relationship('departement_pic', 'pic')
@@ -50,14 +50,15 @@ class TindakanRelationManager extends RelationManager
                     ->required()
                     ->native(false),
                 TextInput::make('tanggapan_pic')
-                ->required()
-                ->maxLength(255),
+                    ->required()
+                    ->maxLength(255),
                 TextInput::make('keterangan')
-                ->required()
-                ->maxLength(255),
+                    ->required()
+                    ->maxLength(255),
                 DatePicker::make('rencana_perbaikan')
-                ->format('D-M-Y')
-                ->required(),
+                    ->required(),
+                DatePicker::make('rencana_perbaikan')
+                    ->required(),
             ]);
     }
 
@@ -67,18 +68,30 @@ class TindakanRelationManager extends RelationManager
             ->recordTitleAttribute('temuan_id')
             ->columns([
                 TextColumn::make('status')
-                ->badge()
-                ->color(fn(string $state): string=> match ($state){
-                    'Proses' => 'danger',
-                    'Pending' => 'warning',
-                    'Dikerjakan' => 'grey',
-                    'Selesai' => 'success'
-                }),
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'Proses' => 'danger',
+                        'Pending' => 'warning',
+                        'Dikerjakan' => 'grey',
+                        'Selesai' => 'success'
+                    }),
                 ImageColumn::make('img_url')
                     ->label('Gambar Tindakan')
                     ->height(120),
+                TextColumn::make('departement_pic.name')
+                    ->label('Departement terkait')
+                    ->searchable(),
+                TextColumn::make('departement_pic.pic')
+                    ->label('PIC')
+                    ->searchable(),
+                TextColumn::make('tanggapan_pic'),
+                TextColumn::make('keterangan'),
                 TextColumn::make('created_at')
                     ->label('Tanggal Pelaporan')
+                    ->searchable()
+                    ->date('D,d-M-Y'),
+                TextColumn::make('rencana_perbaikan')
+                    ->label('Rencana Perbaikan')
                     ->searchable()
                     ->date('D,d-M-Y'),
             ])

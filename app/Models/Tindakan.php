@@ -32,13 +32,18 @@ class Tindakan extends Model
 
 	protected $casts = [
 		'temuan_id' => 'int',
-		'img_url' => 'array'
+		'img_url' => 'array',
+		'pic' => 'int'
 	];
 
 	protected $fillable = [
 		'status',
 		'img_url',
-		'temuan_id'
+		'temuan_id',
+		'pic',
+		'tanggapan_pic',
+		'keterangan',
+		'rencana_perbaikan',
 	];
 
 
@@ -49,5 +54,8 @@ class Tindakan extends Model
 	public function temuans()
 	{
 		return $this->hasMany(Temuan::class, 'tindakan_status_id');
+	}
+	public function departement_pic(){
+		return $this->belongsTo(Departement::class, 'pic');
 	}
 }

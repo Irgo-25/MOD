@@ -57,14 +57,15 @@ class TemuanResource extends Resource
                     ->live()
                     ->required()
                     ->relationship('team', 'tim')
-                    ->afterStateUpdated(function($state, callable $set){
+                    ->afterStateUpdated(function ($state, callable $set) {
                         $team = Team::find($state);
-                        if($team){
+                        if ($team) {
                             $set('pelaksana_mod', ($team->pelaksana_mod));
                         }
                     })
                     ->native(false),
                 TextInput::make('pelaksana_mod'),
+
                 MarkdownEditor::make('deskripsi_temuan')
                     ->columnSpanFull()
                     ->required(),

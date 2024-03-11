@@ -75,6 +75,6 @@ class Temuan extends Model
 
 	public function tindakans()
 	{
-		return $this->hasMany(Tindakan::class);
+		return $this->hasMany(Tindakan::class, 'temuan_id');
 	}
 }
