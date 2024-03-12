@@ -57,8 +57,6 @@ class TindakanRelationManager extends RelationManager
                     ->maxLength(255),
                 DatePicker::make('rencana_perbaikan')
                     ->required(),
-                DatePicker::make('rencana_perbaikan')
-                    ->required(),
             ]);
     }
 

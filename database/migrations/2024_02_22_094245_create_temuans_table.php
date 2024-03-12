@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('usulan');
             $table->foreignId('pic')->constrained('departements', 'id');
             $table->foreignId('tindakan_status_id')->nullable()->constrained('tindakans', 'id');
-            $table->foreignId('tindakan_img_url_id')->nullable()->constrained('tindakans', 'id');
             $table->timestamps();
         });
     }
