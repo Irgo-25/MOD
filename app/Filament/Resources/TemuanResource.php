@@ -44,7 +44,6 @@ use function Laravel\Prompts\multisearch;
 
 class TemuanResource extends Resource
 {
-    public ?array $pelaksana_mod = [];
     protected static ?string $model = Temuan::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
@@ -64,7 +63,8 @@ class TemuanResource extends Resource
                         }
                     })
                     ->native(false),
-                TextInput::make('pelaksana_mod'),
+                TextInput::make('pelaksana_mod')
+                    ->readOnly(),
 
                 MarkdownEditor::make('deskripsi_temuan')
                     ->columnSpanFull()
@@ -154,7 +154,7 @@ class TemuanResource extends Resource
             ->schema([
                 ImageEntry::make('img_url')
                     ->label('Gambar Temuan')
-                    ->height(150),
+                    ->height(100),
             ]);
     }
 
@@ -172,6 +172,7 @@ class TemuanResource extends Resource
             'create' => Pages\CreateTemuan::route('/create'),
             'view' => ViewTemuan::route('/{record}'),
             'edit' => Pages\EditTemuan::route('/{record}/edit'),
+            'report' => Pages\LaporanTemuan::route('/report'),
         ];
     }
 }

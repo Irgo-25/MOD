@@ -16,7 +16,7 @@ class ListTemuans extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+
         ];
     }
-    
 }
