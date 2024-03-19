@@ -9,6 +9,7 @@ use App\Models\Departement;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
+
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 

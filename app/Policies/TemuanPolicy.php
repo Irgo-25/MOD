@@ -13,7 +13,7 @@ class TemuanPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->role == 'Superuser';
+        return $user->hasRole('Superuser');
     }
 
     /**
@@ -21,7 +21,7 @@ class TemuanPolicy
      */
     public function view(User $user, Temuan $temuan): bool
     {
-        return $user->role == 'Superuser';
+        return $user->hasRole('Superuser');
     }
 
     /**
@@ -29,7 +29,7 @@ class TemuanPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role == 'Superuser';
+        return $user->hasRole('Superuser');
     }
 
     /**
@@ -37,7 +37,7 @@ class TemuanPolicy
      */
     public function update(User $user, Temuan $temuan): bool
     {
-        return $user->role == 'Superuser';
+        return $user->hasRole('Superuser');
     }
 
     /**
@@ -45,7 +45,7 @@ class TemuanPolicy
      */
     public function delete(User $user, Temuan $temuan): bool
     {
-        return $user->role == 'Superuser';
+        return $user->hasRole('Superuser');
     }
 
     /**
@@ -53,7 +53,7 @@ class TemuanPolicy
      */
     public function restore(User $user, Temuan $temuan): bool
     {
-        return $user->role == 'Superuser';
+        return $user->hasRole('Superuser');
     }
 
     /**
@@ -61,6 +61,6 @@ class TemuanPolicy
      */
     public function forceDelete(User $user, Temuan $temuan): bool
     {
-        return $user->role == 'Superuser';
+        return $user->hasRole('Superuser');
     }
 }

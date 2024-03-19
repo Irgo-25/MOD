@@ -2,26 +2,27 @@
 
 namespace App\Policies;
 
-use App\Models\Tindakan;
+use App\Models\Team;
 use App\Models\User;
+
 use Illuminate\Auth\Access\Response;
 
-class TindakanPolicy
+class TeamPolicy
 {
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasRole(['Superuser', 'user']);
+      return $user->hasRole('Superuser');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Tindakan $tindakan): bool
+    public function view(User $user, Team $Team): bool
     {
-        return $user->hasRole(['Superuser', 'user']);
+      return $user->hasRole('Superuser');
     }
 
     /**
@@ -29,38 +30,38 @@ class TindakanPolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasRole(['Superuser', 'user']);
+      return $user->hasRole('Superuser');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Tindakan $tindakan): bool
+    public function update(User $user, Team $Team): bool
     {
-        return $user->hasRole(['Superuser', 'user']);
+      return $user->hasRole('Superuser');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Tindakan $tindakan): bool
+    public function delete(User $user, Team $Team): bool
     {
-        return $user->hasRole(['Superuser', 'user']);
+      return $user->hasRole('Superuser');
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Tindakan $tindakan): bool
+    public function restore(User $user, Team $Team): bool
     {
-        return $user->hasRole(['Superuser', 'user']);
+      return $user->hasRole('Superuser');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Tindakan $tindakan): bool
+    public function forceDelete(User $user, Team $Team): bool
     {
-        return $user->hasRole(['Superuser', 'user']);
+      return $user->hasRole('Superuser');
     }
 }
