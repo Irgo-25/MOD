@@ -172,7 +172,6 @@ class TemuanResource extends Resource
             'create' => Pages\CreateTemuan::route('/create'),
             'view' => ViewTemuan::route('/{record}'),
             'edit' => Pages\EditTemuan::route('/{record}/edit'),
-            'report' => Pages\LaporanTemuan::route('/report'),
         ];
     }
 }

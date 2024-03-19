@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\Departement;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
@@ -29,13 +31,24 @@ class DatabaseSeeder extends Seeder
             'name' => 'Calender',
             'pic' => 'Paijan'
         ]);
-        DB::table('users')->insert([
+        $user = User::factory()->create([
             'name' => 'superuser',
             'email' => 'root@gmail.com',
             'jabatan' => 'Direktur',
-            'role' => 'Superuser',
             'departement_id' => 1,
             'password' => Hash::make('admin123')
         ]);
+        $role = Role::create(['name' => 'Superuser']);
+        $user->assignRole($role);
+
+        $user2 = User::factory()->create([
+            'name' => 'user',
+            'email' => 'irgosg@gmail.com',
+            'jabatan' => 'spv',
+            'departement_id' => 1,
+            'password' => Hash::make('admin123')
+        ]);
+        $role2 = Role::create(['name' => 'user']);
+        $user2->assignRole($role2);
     }
 }

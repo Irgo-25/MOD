@@ -13,6 +13,8 @@ use App\Policies\TemuanPolicy;
 use App\Models\PenanggungJawab;
 use App\Policies\TindakanPolicy;
 use App\Policies\DepartementPolicy;
+use App\Filament\Pages\LaporanTemuan;
+use App\Policies\LaporanTemuanPolicy;
 use App\Policies\PenanggungJawabPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -27,7 +29,8 @@ class AuthServiceProvider extends ServiceProvider
         User::class => UserPolicy::class,
         Departement::class => DepartementPolicy::class,
         Tindakan::class => TindakanPolicy::class,
-        Temuan::class => TemuanPolicy::class
+        Temuan::class => TemuanPolicy::class,
+
     ];
 
     /**
